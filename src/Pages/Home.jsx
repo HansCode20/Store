@@ -5,6 +5,8 @@ import Navigation from '../Fragment/Navigation'
 
 
 const Home = () => {
+
+  
   return (
     <div>
       <Navigation/>
