@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { toast } from 'sonner';
+import { toast } from 'sonner';  // Ensure the import path is correct
 
 const initialState = {
   cartitems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
@@ -31,20 +31,25 @@ const cartSlice = createSlice({
         });
       }
       localStorage.setItem('cartItems', JSON.stringify(state.cartitems));
+
+      state.cartTotalQuantity = state.cartitems.reduce(
+        (total, item) => total + item.cartQuantity,
+        0
+      );
     },
     // Remove from cart
     removeFromCart(state, action) {
       const nextCartItems = state.cartitems.filter(
         (cartItem) => cartItem.id !== action.payload.id
-      )
+      );
 
-      state.cartitems = nextCartItems
-      localStorage.setItem('cartItems', JSON.stringify(state.cartitems))
+      state.cartitems = nextCartItems;
+      localStorage.setItem('cartItems', JSON.stringify(state.cartitems));
       toast.success(`${action.payload.title} removed from cart`, {
         position: 'top-center',
         autoClose: 1000,
-      })
-    } ,
+      });
+    },
     // Decrease cart
     decreaseCart(state, action) {
       const itemIndex = state.cartitems.findIndex(
@@ -52,59 +57,68 @@ const cartSlice = createSlice({
       );
 
       if (state.cartitems[itemIndex].cartQuantity > 1) {
-        state.cartitems[itemIndex].cartQuantity -= 1
+        state.cartitems[itemIndex].cartQuantity -= 1;
         toast.info(`Decreased ${state.cartitems[itemIndex].title} quantity`, {
           position: 'top-center',
           autoClose: 1000,
-        })
+        });
       } else if (state.cartitems[itemIndex].cartQuantity === 1) {
         const nextCartItems = state.cartitems.filter(
           (cartItem) => cartItem.id !== action.payload.id
-        )
-        state.cartitems = nextCartItems
-        localStorage.setItem('cartItems', JSON.stringify(state.cartitems))
+        );
+        state.cartitems = nextCartItems;
+        localStorage.setItem('cartItems', JSON.stringify(state.cartitems));
         toast.success(`${action.payload.title} removed from cart`, {
           position: 'top-center',
           autoClose: 1000,
-        })
+        });
       }
     },
-
     // Increase Cart
     increaseCart(state, action) {
       const itemIndex = state.cartitems.findIndex(
         (cartItem) => cartItem.id === action.payload.id
       );
 
-      if (state.cartitems[itemIndex].cartQuantity >= 1 ) {
-        state.cartitems[itemIndex].cartQuantity += 1
+      if (state.cartitems[itemIndex].cartQuantity >= 1) {
+        state.cartitems[itemIndex].cartQuantity += 1;
         toast.info(`Increased ${state.cartitems[itemIndex].title} quantity`, {
           position: 'top-center',
           autoClose: 1000,
-        })
+        });
       } else if (state.cartitems[itemIndex].cartQuantity === 1) {
         const nextCartItems = state.cartitems.filter(
           (cartItem) => cartItem.id !== action.payload.id
-        )
-        state.cartitems = nextCartItems
-        localStorage.setItem('cartItems', JSON.stringify(state.cartitems))
+        );
+        state.cartitems = nextCartItems;
+        localStorage.setItem('cartItems', JSON.stringify(state.cartitems));
         toast.success(`${action.payload.title} removed from cart`, {
           position: 'top-center',
           autoClose: 1000,
-        })
+        });
       }
     },
-    
     clearCart(state, action) {
       state.cartitems = [];
       localStorage.setItem('cartItems', JSON.stringify(state.cartitems));
-      toast.success( `Cart cleared`, {
+      toast.success(`Cart cleared`, {
         position: 'top-center',
         autoClose: 1000,
-      })
+      });
     },
+
+    // cartTotalQuantity(state, action) {
+    //   const quantity = state.cartitems.reduce((acc, item) => acc + item.cartQuantity, 0);
+    //   state.cartTotalQuantity = quantity;
+    // },
+
+    // cartTotalAmount(state, action) {
+    //   const amount = state.cartitems.reduce((acc, item) => acc + item.price * item.cartQuantity, 0);
+    //   state.cartTotalAmount = amount;
+    // },
+    
+
   },
-  
 });
 
 export const { addToCart, clearCart, removeFromCart, decreaseCart, increaseCart } = cartSlice.actions;
