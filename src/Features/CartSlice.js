@@ -49,6 +49,10 @@ const cartSlice = createSlice({
         position: 'top-center',
         autoClose: 1000,
       });
+      state.cartTotalQuantity = state.cartitems.reduce(
+        (total, item) => total + item.cartQuantity,
+        0
+      );
     },
     // Decrease cart
     decreaseCart(state, action) {
@@ -73,6 +77,11 @@ const cartSlice = createSlice({
           autoClose: 1000,
         });
       }
+
+      state.cartTotalQuantity = state.cartitems.reduce(
+        (total, item) => total + item.cartQuantity,
+        0
+      );
     },
     // Increase Cart
     increaseCart(state, action) {
@@ -97,6 +106,10 @@ const cartSlice = createSlice({
           autoClose: 1000,
         });
       }
+      state.cartTotalQuantity = state.cartitems.reduce(
+        (total, item) => total + item.cartQuantity,
+        0
+      );
     },
     clearCart(state, action) {
       state.cartitems = [];
@@ -105,6 +118,10 @@ const cartSlice = createSlice({
         position: 'top-center',
         autoClose: 1000,
       });
+      state.cartTotalQuantity = state.cartitems.reduce(
+        (total, item) => total + item.cartQuantity,
+        0
+      );
     },
 
     // cartTotalQuantity(state, action) {
