@@ -6,11 +6,11 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['sonner'],
+      external: ['./node_modules/sonner'],
 
       output: {
         globals: {
-          sonner: 'Sonner'
+          sonner: './node_modules/Sonner'
         }
       }
     }
