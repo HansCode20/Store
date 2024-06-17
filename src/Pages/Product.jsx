@@ -2,9 +2,11 @@
     import { useNavigate } from 'react-router-dom'
     import { useDispatch } from 'react-redux'
     import axios from 'axios'
-    import { addToCart } from '../Features/CartSlice'
+    import { addToCart, addToFavorite  } from '../Features/CartSlice'
     import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
     import { IoMdEye } from "react-icons/io";
+    import { MdFavoriteBorder } from "react-icons/md";
+
 
     // Animasi aos
     import AOS from 'aos';
@@ -27,6 +29,11 @@
             const handleAddToCart = (product) => {
                 dispatch(addToCart(product))
                 // navigate('/cart')
+            };
+
+            const handleFavorite = (product) => {
+                dispatch(addToFavorite(product))
+                // navigate('/favorite')
             };
 
 
@@ -146,13 +153,16 @@
                     $
                     {item.price}
                     </p>
-                    <div className='flex gap-4'>
+                    <div className='flex gap-4 justify-center items-center lg:justify-start md:justify-start'>
                     <button className='mt-4 px-4 py-2 bg-black text-white hover:bg-white hover:text-black duration-500 rounded-lg' 
                     onClick={() => handleAddToCart(item)}>
                         +
                     </button>
                     <button className='mt-4 px-3 py-2 bg-black text-white hover:bg-white hover:text-black duration-500 rounded-lg' onClick={() => navigate(`/product/${item.id}`)}>
                         <IoMdEye className='w-6 h-6' />
+                    </button>
+                    <button className='mt-4 px-3 py-2 bg-black text-white hover:bg-white hover:text-black duration-500 rounded-lg' onClick={() => handleFavorite(item)}>
+                        <MdFavoriteBorder className='w-6 h-6' />
                     </button>
                     </div>
                 </div>
