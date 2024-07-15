@@ -4,7 +4,7 @@ import { toast } from 'sonner';  // Ensure the import path is correct
 const initialState = {
   cartitems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
   favoriteItems: localStorage.getItem('favoriteItems') ? JSON.parse(localStorage.getItem('favoriteItems')) : [],
-  cartTotalQuantity: 0,
+  cartTotalQuantity: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')).reduce((total, item) => total + item.cartQuantity, 0) : 0,
   cartTotalAmount: 0,
 };
 
@@ -179,8 +179,18 @@ const cartSlice = createSlice({
         0
       );
     },
+    clearCartWithoutNotification(state, action) {
+      state.cartitems = [];
+      localStorage.setItem('cartItems', JSON.stringify(state.cartitems));
+      state.cartTotalQuantity = state.cartitems.reduce(
+        (total, item) => total + item.cartQuantity,
+        0
+      );
+    },
+    
   },
 });
 
-export const { addToCart, addToFavorite, removeFromCart, removeFromFavorite, decreaseCart, increaseCart, clearCart } = cartSlice.actions;
+
+export const { addToCart, addToFavorite, removeFromCart, removeFromFavorite, decreaseCart, increaseCart, clearCart, clearCartWithoutNotification } = cartSlice.actions;
 export default cartSlice.reducer;

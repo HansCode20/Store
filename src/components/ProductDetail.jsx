@@ -2,9 +2,12 @@ import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import './ProductDetail.css'
+import { Link } from 'react-router-dom'
+
+// Redux Concept
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../Features/CartSlice'
-import { useNavigate } from 'react-router-dom'
 
 
 const ProductDetail = () => {
@@ -14,11 +17,9 @@ const ProductDetail = () => {
     const [Product, setProduct] = useState([])
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
-        navigate('/cart')
     };
     
 
@@ -26,7 +27,7 @@ const ProductDetail = () => {
         setLoading(true)
         setTimeout(() => {
         axios
-        .get(`https://fakestoreapi.com/products/${id}`)
+        .get(`https://restapistore-default-rtdb.asia-southeast1.firebasedatabase.app/Store/${id}.json?auth=QVdNWO3MDXvTdszmf7YUy0tcjRjR3drAmOlmNrc4`)
         .then((res) => {
             setLoading(false)
             setProduct(res.data)
@@ -44,11 +45,9 @@ const ProductDetail = () => {
 
     if (loading ) {
         return (
-            <div className='flex space-x-2 justify-center items-center bg-white h-screen dark:invert'>
+            <div className='flex space-x-2 justify-center items-center bg-white h-screen '>
                 <span className='sr-only'>Loading...</span>
-                <div className='h-5 w-5 bg-black rounded-full animate-bounce'></div>
-                <div className='h-5 w-5 bg-black rounded-full animate-bounce'></div>
-                <div className='h-5 w-5 bg-black rounded-full animate-bounce'></div>
+                <span class="loader"></span>
             </div>
         );
     }
@@ -63,9 +62,16 @@ const ProductDetail = () => {
             <h1 className='text-3xl font-bold mb-5'>{Product.title}</h1>
             <p className='text-xl font-bold text-[red] mb-5'>${Product.price}</p>
             <p className='text-xl mb-5'>{Product.description}</p>
+            <div className='flex space-x-5'>
             <button className='py-3 px-5 bg-black text-white rounded-md hover:bg-gray-200 hover:text-black hover:border-black duration-300' onClick={() => handleAddToCart(Product)}>
                 Add to cart
             </button>
+            <Link to='/'>
+            <button className='py-3 px-5 bg-black text-white rounded-md hover:bg-gray-200 hover:text-black hover:border-black duration-300'>
+                Back to Home
+            </button>
+            </Link>
+            </div>
         </div>
     </div>
   )
