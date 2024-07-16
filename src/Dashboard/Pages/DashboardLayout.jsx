@@ -2,6 +2,7 @@ import React from 'react';
 import NavbarDashboard from './DashboardCore/NavbarDashboard';
 import ItemBox from './DashboardCore/ItemBox';
 import TotalPrice from './DashboardCore/TotalPrice';
+import LastTransaction from './DashboardCore/LastTransaction';
 
 function DashboardLayout() {
   return (
@@ -15,6 +16,9 @@ function DashboardLayout() {
       </div>
       <div>
         <TotalPrice/>
+      </div>
+      <div className='mt-20 lg:mt-0'>
+        <LastTransaction/>
       </div>
     </div>
   );

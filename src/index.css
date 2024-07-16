@@ -48,3 +48,31 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.custom-checkbox {
+  -webkit-appearance: none; /* untuk WebKit browsers */
+  -moz-appearance: none; /* untuk Firefox */
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid #000;
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  position: relative;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked::after {
+  content: ''; /* konten kosong */
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 4px;
+  height: 8px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
