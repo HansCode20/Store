@@ -13,8 +13,13 @@ import {
   InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
+
+// React Icons
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
+import { FaUserFriends } from "react-icons/fa";
+import { IoArrowBackCircle } from "react-icons/io5";
+// Image Logo Sidebar
 import Logo from "../../assets/Images/NoBackgroundLogo.png";
 
 const Sidebar = () => {
@@ -63,13 +68,15 @@ const Sidebar = () => {
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <InboxIcon className="h-5 w-5" />
+              <FaUserFriends className="h-5 w-5" />
             </ListItemPrefix>
-            <p className="text-xl font-semibold">Category</p>
+            <Link to="/dashboard/users" className="text-xl font-semibold" onClick={handleOpen}>
+              Users
+            </Link>
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
+              <IoArrowBackCircle  className="h-5 w-5" />
             </ListItemPrefix>
             <Link to="/" className="text-xl font-semibold" onClick={handleOpen}>
               Back to Home

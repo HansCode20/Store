@@ -91,6 +91,16 @@ function Product() {
         }
         return star;
     };
+     
+    const notFoundProduct = () => {
+        if (filteredProducts === null || filteredProducts.length === 0) {
+            return (
+                <div className='mt-20 text-center flex justify-center items-center'>
+                    <h1 className='text-3xl font-bold mb-6'>No Products Found</h1>
+                </div>
+            );
+        }
+    }
 
     return (
         <div className='mt-20' id='product'>
@@ -118,7 +128,8 @@ function Product() {
                             strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </div>
-            </div>
+            </div>  
+            {notFoundProduct()}
             <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-0 lg:mt-10 md:mt-10 p-10'>
                 {filteredProducts.map((item) => (
                     <div key={item.id} className='bg-white rounded-lg p-10 shadow-lg' data-aos="fade-up" data-aos-duration="2000">

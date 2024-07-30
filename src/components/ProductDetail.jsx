@@ -58,7 +58,7 @@ const ProductDetail = () => {
         <div className='mx-auto mt-5 lg:mt-0 '>
             <img src={Product.image} alt="Image" width={300} />
         </div>
-        <div className='mx-auto justify-center items-center py-10 lg:py-40 px-10 lg:px-0 lg:w-full md:w-full'> 
+        <div className='mx-auto justify-center items-center py-10 lg:py-40 px-10 lg:px-0 lg:w-full md:w-full text-left '> 
             <h1 className='text-3xl font-bold mb-5'>{Product.title}</h1>
             <p className='text-xl font-bold text-[red] mb-5'>${Product.price}</p>
             <p className='text-xl mb-5'>{Product.description}</p>

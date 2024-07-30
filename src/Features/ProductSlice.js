@@ -10,7 +10,7 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
   'product/fetchProducts',
   async () => {
-    const response = await axios.get('https://fakestoreapi.com/products');
+    const response = await axios.get("https://restapistore-default-rtdb.asia-southeast1.firebasedatabase.app/Store.json?auth=QVdNWO3MDXvTdszmf7YUy0tcjRjR3drAmOlmNrc4");  
     return response.data;
   }
 );
@@ -26,7 +26,6 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'success';
-        state.items = [...action.payload.slice(0, 8), ...action.payload.slice(14, 20)];
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'rejected';

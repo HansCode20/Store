@@ -1,79 +1,128 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 // React Icons
-import { FaBox, FaClipboardCheck } from "react-icons/fa";
-import { BsClipboard2XFill } from "react-icons/bs";
+import { FaBox } from "react-icons/fa";
+import { BiSolidCategory } from "react-icons/bi";
+import { BiCategoryAlt } from "react-icons/bi";
+import { TbCategory2 } from "react-icons/tb";
 
 const ItemBox = () => {
-  return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 p-5'>
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [productTrend, setProductTrend] = useState('');
+    const [categoryCount, setCategoryCount ] = useState({}); // State to store category counts
+    const prevProductCount = useRef(0);
 
-        <div className='flex  items-center gap-5 shadow-lg p-5 rounded-lg'>
-            <div className='bg-gray-200 rounded-full p-3'>
-               <FaBox/>
+    useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const response = await axios.get('https://restapistore-default-rtdb.asia-southeast1.firebasedatabase.app/Store.json?auth=QVdNWO3MDXvTdszmf7YUy0tcjRjR3drAmOlmNrc4');
+                console.log("Response data:", response.data);
+
+                if (response.data) {
+                    const productsArray = Object.values(response.data);
+                    console.log("Products array:", productsArray);
+                    setProducts(productsArray);
+
+                    // Calculate category counts
+                   const categoryCount = {};
+                    productsArray.forEach(product => {
+                        if (categoryCount[product.category]) {
+                            categoryCount[product.category]++;
+                        } else {
+                            categoryCount[product.category] = 1;
+                        }
+                    });
+                    setCategoryCount(categoryCount);
+
+                    // Determine product trend
+                    const currentProductCount = productsArray.length;
+                    if (currentProductCount > prevProductCount.current) {
+                        setProductTrend('increase');
+                    } else if (currentProductCount < prevProductCount.current) {
+                        setProductTrend('decrease');
+                    }
+                    prevProductCount.current = currentProductCount;
+                } else {
+                    console.log("No data found");
+                }
+
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                setLoading(false);
+            }
+        };
+
+        getProducts();
+    }, []);
+
+    return (
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 p-5'>
+            {/* Products */}
+            <div className='flex items-center gap-5 shadow-lg p-5 rounded-lg'>
+                <div className='bg-gray-200 rounded-full p-3'>
+                    <FaBox />
+                </div>
+                <div>
+                    <h1>Total Products</h1>
+                    <div className='flex items-center gap-2'>
+                        <p className={`font-bold ${loading ? 'text-base' : 'text-3xl'}`}>
+                            {loading ? 'Loading...' : products.length}
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h1>Total Products</h1>
-                <div className='flex items-center gap-2'>
-                <p className='text-3xl font-bold'>100</p>
-                    <div className='flex items-center gap-1'>
-                    <img  src="https://img.icons8.com/fluency-systems-filled/000000/bounce-up.png" alt="bounce-up" className='w-5 h-5 bg-green-500 p-1 rounded-full filter '/>
-                    <p className='text-green-500 font-bold'>+2.5%</p>
+
+            {/* Category Product */}
+            <div className='flex items-center gap-5 shadow-lg p-5 rounded-lg'>
+                <div className='bg-gray-200 rounded-full p-3'>
+                    <BiSolidCategory className='text-xl' />
+                </div>
+                <div>
+                    <h1>Category Product</h1>
+                    <div className='flex flex-col gap-2'>
+                            <div  className='flex items-center gap-2'>
+                                    <p className={`font-bold ${loading ? 'text-base' : 'text-3xl'}`}>
+                                        {loading ? 'Loading...' : Object.keys(categoryCount).length}
+                                    </p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Canceled Order */}
+            <div className='flex items-center gap-5 shadow-lg p-5 rounded-lg'>
+                <div className='bg-gray-200 rounded-full p-3'>
+                    <BiCategoryAlt className='text-xl' />
+                </div>
+                <div>
+                    <h1>men's Product</h1>
+                    <div className='flex items-center gap-2'>
+                                     <p className={`font-bold ${loading ? 'text-base' : 'text-3xl'}`}>
+                                        {loading ? 'Loading...' : (categoryCount["men's clothing"] || 0)}
+                                    </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Top Products */}
+            <div className='flex items-center gap-5 shadow-lg p-5 rounded-lg'>
+                <div className='bg-gray-200 rounded-full p-3'>
+                    <TbCategory2 className='text-xl' />
+                </div>
+                <div>
+                    <h1>Women's Product</h1>
+                    <div className='flex items-center gap-2'>
+                                    <p className={`font-bold ${loading ? 'text-base' : 'text-3xl'}`}>
+                                        {loading ? 'Loading...' : (categoryCount["women's clothing"] || 0)}
+                                    </p>
                     </div>
                 </div>
             </div>
         </div>
+    );
+};
 
-        <div className='flex  items-center gap-5 shadow-lg p-5 rounded-lg'>
-            <div className='bg-gray-200 rounded-full p-3'>
-               <FaClipboardCheck className='text-xl'/>
-            </div>
-            <div>
-                <h1>Completed Order</h1>
-                <div className='flex items-center gap-2'>
-                <p className='text-3xl font-bold'>220</p>
-                <div className='flex items-center gap-1'>
-                <img  src="https://img.icons8.com/fluency-systems-filled/000000/bounce-up.png" alt="bounce-up" className='w-5 h-5 bg-green-500 p-1 rounded-full filter '/>
-                <p className='text-green-500 font-bold'>+2.5%</p>
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div className='flex  items-center gap-5 shadow-lg p-5 rounded-lg'>
-            <div className='bg-gray-200 rounded-full p-3'>
-               <BsClipboard2XFill className='text-xl'/>
-            </div>
-            <div>
-                <h1>Canceled Order</h1>
-                <div className='flex items-center gap-2'>
-                <p className='text-3xl font-bold'>110</p>
-                <div className='flex items-center gap-1'>
-                <img src="https://img.icons8.com/ios-glyphs/30/delete-sign.png" alt="delete-sign" className='w-5 h-5 bg-red-500 p-1 rounded-full'/>
-                <p className='text-red-500 font-bold'>+2.5%</p>
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div className='flex  items-center gap-5 shadow-lg p-5 rounded-lg'>
-            <div className='bg-gray-200 rounded-full p-3'>
-            <img width="25" height="20" src="https://img.icons8.com/ios-glyphs/30/certificate.png" alt="certificate"/>
-            </div>
-            <div>
-                <h1>Top Products</h1>
-                <div className='flex items-center gap-2'>
-                <p className='text-3xl font-bold'>100</p>
-                <div className='flex items-center gap-1'>
-                <img  src="https://img.icons8.com/fluency-systems-filled/000000/bounce-up.png" alt="bounce-up" className='w-5 h-5 bg-green-500 p-1 rounded-full filter '/>
-                <p className='text-green-500 font-bold'>+2.5%</p>
-                </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-  )
-}
-
-export default ItemBox
+export default ItemBox;

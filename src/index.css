@@ -38,6 +38,8 @@
   background: #555;
 }
 
+
+
 #snap-midtrans {
   display: none;
   z-index: 1000;
@@ -76,3 +78,28 @@
   transform: rotate(45deg);
 }
 
+.dashboard-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-row {
+    flex-direction: row;
+    gap: 20px;
+  }
+}
+
+/* BoxImage and LastTransaction styling */
+.dashboard-row > * {
+  flex: 1;
+  overflow: hidden;
+}
+
+.dashboard-row .flex-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -14,6 +14,7 @@
   import { Outlet } from 'react-router-dom';
   import DashboardProduct from './Dashboard/Pages/DashboardProduct';
   import DashboardCore from './Dashboard/Pages/DashboardLayout';
+  import DashboardUser from './Dashboard/Pages/DashboardCore/Users';
   import Login from './Auth/Login';
   import Register from './Auth/Register';
   import Profil from './components/Profil';
@@ -73,6 +74,7 @@
             <Route index element={<DashboardCore />} />
             <Route path="product" element={<DashboardProduct />} />
             <Route path="core" element={<DashboardCore />} />
+            <Route path="users" element={<DashboardUser />} />
           </Route>
           <Route path="/success" element={<Succes isPaymentSuccess={isPaymentSuccess} />} />
           <Route path="/cancel" element={<Cancel isPaymentCanceled={isPaymentCanceled} />} />
