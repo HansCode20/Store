@@ -34,12 +34,12 @@ const BoxImage = () => {
   }, []);
 
   return (
-    <div className='shadow-lg p-5 rounded-lg mt-10  ' style={{ backgroundImage: 'linear-gradient(to right, #f6f1ee, #f0e9e9, #e7e1e5, #dbdae0, #ced4d9)'}}>
+    <div className='p-0 lg:p-5 md:p-5 sm:p-5 rounded-lg mt-10 shadow-xl '>
       <div className='mt-5'>
         <h1 className='font-bold text-2xl mb-2'>Products Glamour Apparel😊</h1>
         <p className='mb-4'>Some of your products already in stock</p>
       </div>
-      <div className="container mt-10 p-10">
+      <div className="container mt-10 p-0 sm:p-10 lg:p-10 md:p-10">
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -66,7 +66,7 @@ const BoxImage = () => {
             >
               {products.map((product) => (
                 <SwiperSlide key={product.id}>
-                  <div className="swiper-slide-content shadow-md ">
+                  <div className="swiper-slide-content  ">
                     <img src={product.image} alt={product.name} loading="lazy" />
                   </div>
                 </SwiperSlide>
