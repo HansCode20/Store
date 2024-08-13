@@ -75,7 +75,7 @@ const NavbarDashboard = () => {
             <div className='bg-gray-200 p-3 rounded-full'>
                 <MdDateRange className='text-xl' />
             </div>
-        <p className='text-sm mr-3'>{currentDate}</p>
+        <p className='text-xs lg:text-sm md:text-sm sm:text-sm mr-3'>{currentDate}</p>
         <div className='mr-3 text-sm font-bold'>
            {currentTime.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false })}
         </div>
