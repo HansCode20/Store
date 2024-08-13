@@ -51,8 +51,8 @@
 /* Style for Swiper navigation buttons */
 .swiper-button-next,
 .swiper-button-prev {
-  background-color: #fff;
-  color: #000;
+  background-color: #000;
+  color: #fff;;
   padding: 10px;
   border-radius: 50%;
   width: 40px;
@@ -61,9 +61,13 @@
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .shadow-lg {
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
+
+
+
